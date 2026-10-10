@@ -1,0 +1,74 @@
+# =========================
+# Dependencies
+# =========================
+node_modules/
+**/node_modules/
+
+# =========================
+# Environment Files
+# =========================
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.example
+!**/.env.example
+
+# =========================
+# Firebase / Secrets
+# =========================
+serviceAccountKey.json
+**/serviceAccountKey.json
+*adminsdk*.json
+**/*adminsdk*.json
+*.pem
+
+# =========================
+# Generated files (PDF/PPT/images)
+# =========================
+uploads/
+**/uploads/
+temp/
+**/temp/
+tmp/
+
+# =========================
+# Logs
+# =========================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# =========================
+# Build
+# =========================
+dist/
+build/
+coverage/
+**/dist/
+**/build/
+**/coverage/
+
+# =========================
+# Vite
+# =========================
+.vite/
+
+# =========================
+# IDE
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# OS Files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Misc
+# =========================
+.cache/
