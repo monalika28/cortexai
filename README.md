@@ -2,7 +2,7 @@
 
 CortexAI is a full-stack AI platform where every prompt is routed to a specialized AI agent. One chat interface can hold a normal conversation, generate code, create PDF and PPT files, generate images, search the web, answer questions from uploaded PDFs, and analyze images.
 
-**Demo video:** [Watch the demo](https://drive.google.com/file/d/11Ekm7K5J_m4wp-w-9osYY5Fu1B8RbMEK/view?usp=sharing)
+**Demo video:** [Watch the demo](https://www.loom.com/share/95b0b202e49c4301a02abe881559c87d)
 
 ## Features
 
