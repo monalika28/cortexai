@@ -1,39 +1,36 @@
-import { getModel } from "../config/llmModels.js"
-import { agent } from "../controllers/agent.controller.js"
+import { getModel } from "../config/llmModels.js";
 
 export const router = async (state) => {
+  // PRIORITY 1: Agar file upload hui hai to use pehle analyzer ya PDF RAG par bhejo
+  if (state.file) {
+    if (state.file.mimetype === "application/pdf") {
+      return {
+        ...state,
+        agent: "pdfRag",
+      };
+    }
 
+    if (state.file.mimetype.startsWith("image/")) {
+      return {
+        ...state,
+        agent: "imageAnalyzer",
+      };
+    }
+  }
+
+  // PRIORITY 2: Agar user ne manual agent select kiya hai (aur koi file nahi hai)
   if (state.agent && state.agent !== "auto") {
     return {
       ...state,
-      agent: state.agent
-    }
+      agent: state.agent,
+    };
   }
 
-  if(state.file){
-if(state.file.mimetype==="application/pdf"){
-    return {
-      ...state,
-      agent:"pdfRag"
-    }
-  }
-
-    if(state.file.mimetype.startsWith("image/")){
-    return {
-      ...state,
-      agent:"imageAnalyzer"
-    }
-  }
-  }
-
-  
-
-
-  const llm = await getModel("router")
+  // PRIORITY 3: Auto mode ke liye LLM routing
+  const llm = await getModel("router");
   const prompt = `You are an agent router.
 
 Available agents:
-
 - chat
 - search
 - coding
@@ -42,41 +39,14 @@ Available agents:
 - vision 
 
 Rules:
-
-chat:
-General conversation,
-explanations,
-learning,
-questions.
-
-search:
-Current events,
-latest information,
-news,
-recent developments,
-internet lookup.
-
-coding:
-Generate code,
-debug code,
-build projects,
-architecture,
-API design.
-
-pdf:
-Questions about generate PDFs
-or document context.
-
-ppt:
-Questions about generate ppts
-or ppt context.
-
-vision:
-  Generate image,
-  create image
+chat: General conversation, explanations, learning, questions.
+search: Current events, latest information, news, recent developments, internet lookup.
+coding: Generate code, debug code, build projects, architecture, API design.
+pdf: Questions about generate PDFs or document context.
+ppt: Questions about generate ppts or ppt context.
+vision: Generate image, create image from prompt.
 
 Return ONLY one word:
-
 chat
 search
 coding
@@ -85,18 +55,13 @@ ppt
 vision
 
 User Query:
- ${state.prompt}
-`
+${state.prompt}
+`;
 
-  const response = await llm.invoke(prompt)
+  const response = await llm.invoke(prompt);
 
   return {
     ...state,
-    agent: response.content
-      .trim()
-      .toLowerCase()
-  }
-
-
-
-}
+    agent: response.content.trim().toLowerCase(),
+  };
+};
